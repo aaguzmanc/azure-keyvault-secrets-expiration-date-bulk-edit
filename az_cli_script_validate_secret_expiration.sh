@@ -1,5 +1,3 @@
-#!/bin/bash
-
 #Get KeyVault Names
 vlts=$(az keyvault list --output tsv --query "[].name")
 #Iterate each KeyVault
