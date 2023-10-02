@@ -11,13 +11,13 @@ do
   echo -e "\nVault: $vl\n"
   # Add Access to Vault for User or Service Principal runninng this script so he an modify Secrets
 	az keyvault set-policy --name $vl --object-id $uid --secret-permissions all --output table
-#Get secrets from each KeyVault
-    vsecs=$(az keyvault secret list --output tsv --query "[].name" --vault-name $vl)
+#Get secrets without expiration date (expiration date == null) from each KeyVault
+    vsecs=$(az keyvault secret list --output tsv --query "[?attributes.expires == null].{Name:name}" --vault-name $vl)
 #Iterate Secrets
 	 for vs in $vsecs
      do
       echo -e "\nSecret: $vs\n"
-#Enable and set Expiration Date	  
+#Enable and set Expiration Date	  ********** BELOW YOU SHOULD SET YOUR DESIRED EXPIRATION DTAE FOR SECRETS - THIS WILL BE APPLIED TO ALL SECRETs MASSIVELY!
 	  az keyvault secret set-attributes --expires "2025-10-30" --vault-name $vl -n $vs
 	  echo "\nExpiration set for: $vs\n"
 	 done
