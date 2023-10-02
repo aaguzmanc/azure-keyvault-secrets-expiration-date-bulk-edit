@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#SRIP TO VALIDATE EXPIRATION DATE ON KEVVAULT SECRETS - THIS IS A 
 #ObjectId for Service Principal or User signed in to run the script, it is necesary to grant access to the KeyVaylt secrets this user must have priviledges to manage KeyVaults
 uid=$(az ad signed-in-user show --query "[id]" --output tsv)
 
