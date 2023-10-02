@@ -1,8 +1,7 @@
 #!/bin/bash
 
-#ObjectId for Service Principal or User runninng the script, it is necesary to grant access to the KeyVaylt secrets this can be obtained 
-#from Azure AD - User - UserX - Object ID - paste the ID below:
-export uid="bxxxx-0000-0x00-00c0-6xxxxxxxx";
+#ObjectId for Service Principal or User signed in to run the script, it is necesary to grant access to the KeyVaylt secrets this user must have priviledges to manage KeyVaults
+uid="az ad signed-in-user show --query "[id]" --output tsv";
 
 #Get KeyVault Names
 vlts=$(az keyvault list --output tsv --query "[].name")
@@ -12,7 +11,7 @@ do
   echo -e "\nVault: $vl\n"
   # Add Access to Vault for User or Service Principal runninng this script so he an modify Secrets
 	az keyvault set-policy --name $vl --object-id $uid --secret-permissions all --output table
-#Get secrets
+#Get secrets from each KeyVault
     vsecs=$(az keyvault secret list --output tsv --query "[].name" --vault-name $vl)
 #Iterate Secrets
      for vs in $vsecs
