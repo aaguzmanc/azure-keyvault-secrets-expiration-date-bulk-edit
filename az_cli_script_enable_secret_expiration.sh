@@ -1,10 +1,17 @@
+#!/bin/bash
+
+#ObjectId for Service Principal or User signed in to run the script, it is necesary to grant access to the KeyVaylt secrets this user must have priviledges to manage KeyVaults
+uid=$(az ad signed-in-user show --query "[id]" --output tsv)
+
 #Get KeyVault Names
 vlts=$(az keyvault list --output tsv --query "[].name")
 #Iterate each KeyVault
 for vl in $vlts
 do
   echo -e "\nVault: $vl\n"
-#Get secrets
+  # Add Access to Vault for User or Service Principal runninng this script so he an modify Secrets
+	az keyvault set-policy --name $vl --object-id $uid --secret-permissions all --output table
+#Get secrets from each KeyVault
     vsecs=$(az keyvault secret list --output tsv --query "[].name" --vault-name $vl)
 #Iterate Secrets
 	 for vs in $vsecs
@@ -14,4 +21,6 @@ do
 	  az keyvault secret set-attributes --expires "2025-10-30" --vault-name $vl -n $vs
 	  echo "\nExpiration set for: $vs\n"
 	 done
+# Remove Access to Vaul for User or Service Principal runninng this script	
+	az keyvault set-policy --name $vl --object-id $uid --secret-permissions --output table
 done
