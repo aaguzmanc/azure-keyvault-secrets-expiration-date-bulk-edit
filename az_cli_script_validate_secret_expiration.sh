@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #ObjectId for Service Principal or User signed in to run the script, it is necesary to grant access to the KeyVaylt secrets this user must have priviledges to manage KeyVaults
-uid="az ad signed-in-user show --query "[id]" --output tsv";
+uid=$(az ad signed-in-user show --query "[id]" --output tsv)
 
 #Get KeyVault Names
 vlts=$(az keyvault list --output tsv --query "[].name")
