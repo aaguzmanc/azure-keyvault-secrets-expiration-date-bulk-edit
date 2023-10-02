@@ -1,5 +1,6 @@
 #!/bin/bash
-
+#SRIPT TO SET EXPIRATION DATE ON KEVVAULT SECRETS MASSIVELY - By AG
+#THIS SCRIPT ADD THE REQUIERED PERMISSIONS TO MODIFY SECRETS AND THE REMOVE THOSE PERMISSIONS - ONLY NULL EXIRTION DATE WILL BE SELECTED
 #ObjectId for Service Principal or User signed in to run the script, it is necesary to grant access to the KeyVaylt secrets this user must have priviledges to manage KeyVaults
 uid=$(az ad signed-in-user show --query "[id]" --output tsv)
 
