@@ -1,5 +1,7 @@
 #!/bin/bash
-#SRIPT TO VALIDATE EXPIRATION DATE ON KEVVAULT SECRETS - By AG
+#SRIPT TO VALIDATE EXPIRATION DATE ON KEYVAULT SECRETS - By AG
+#SECRETS EXPIRATION IS REQUIRED TO COMPLY WITH CIS AZURE FOUNDATIONS BENCHMARK V1.4 - CONTROLS 8.3 AND 8.4
+
 #ObjectId for Service Principal or User signed in to run the script, it is necesary to grant access to the KeyVaylt secrets this user must have priviledges to manage KeyVaults
 uid=$(az ad signed-in-user show --query "[id]" --output tsv)
 
